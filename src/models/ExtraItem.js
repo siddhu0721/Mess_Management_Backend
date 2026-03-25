@@ -2,12 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const ExtraItem = sequelize.define('ExtraItem', {
-    itemId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    itemName: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -23,7 +18,15 @@ const ExtraItem = sequelize.define('ExtraItem', {
     isAvailable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
+    },
+    mealType: {
+        type: DataTypes.ENUM('Breakfast', 'Lunch', 'Dinner', 'All'),
+        allowNull: false
+    },
+    day: {
+        type: DataTypes.ENUM('Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'All'),
+        allowNull: false
     }
-}, { timestamps: false });
+}, { timestamps: true });
 
 module.exports = ExtraItem;

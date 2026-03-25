@@ -1,34 +1,26 @@
-const express = require('express');
-const sequelize = require('./config/db'); // Points to your database connection
-const Student = require('./models/Student');
-const Menu = require('./models/Menu');
-const Transaction = require('./models/Transaction');
-const Feedback = require('./models/Feedback');
-const MessManager = require('./models/MessManager');
-const Rebate = require('./models/Rebate');
-const ExtraItem = require('./models/ExtraItem');
-const db_controller = require('./models/db_controller');
+// server.js
 
-const app = express();
-const PORT = 3000; // Keeping the repo's original port
+require("dotenv").config();
 
-app.use(express.json()); // Allows the server to read JSON data
+const app = require("./app");
+const sequelize = require("./config/db");
 
-// 1. Test Route (Keep this)
-//app.get('/', (req, res) => {
-  //res.send('Mess Automation Backend is Running and Connected!');
-//});
+const PORT = process.env.PORT || 5000;
 
-// 2. Database Connection and Sync
-// This creates the tables in your PostgreSQL (Port 5432)
-sequelize.sync({ alter: true })
-  .then(() => {
-    console.log('Database synced successfully on port 5432');
-    // Start the server only after the DB is ready
+const startServer = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("DB Connected");
+
+    await sequelize.sync({ alter: true });
+
     app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
-  })
-  .catch((err) => {
-    console.error('Failed to sync database:', err);
-  });
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+startServer();

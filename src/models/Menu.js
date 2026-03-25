@@ -2,13 +2,8 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Menu = sequelize.define('Menu', {
-    menuId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    date: {
-        type: DataTypes.DATEONLY,
+    day: {
+        type: DataTypes.ENUM('Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
         allowNull: false
     },
     mealType: {
@@ -16,13 +11,9 @@ const Menu = sequelize.define('Menu', {
         allowNull: false
     },
     items: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSON,
         allowNull: false
     },
-    voteCount: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0
-    }
-}, { timestamps: false });
+}, { timestamps: true });
 
 module.exports = Menu;
