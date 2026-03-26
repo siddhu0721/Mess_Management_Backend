@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const app = require("./app");
 const sequelize = require("./config/db");
-
++ require("./models/Index");
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
